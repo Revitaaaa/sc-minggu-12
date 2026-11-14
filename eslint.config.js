@@ -1,5 +1,8 @@
 module.exports = [
   {
+    ignores: ["venv/**", "node_modules/**", "**/coverage/**"],
+  },
+  {
     files: ["**/*.js"],
     languageOptions: {
       ecmaVersion: 2022,
