@@ -20,7 +20,6 @@ jobs:
           cache: 'npm'
 
       - name: Install dependencies
-        uses: actions/setup-node@v4
         run: npm ci
 
       - name: Run linter
@@ -31,3 +30,4 @@ jobs:
 
       - name: Run tests with coverage
         run: npm test -- --coverage --ci --coverageThreshold='{"global":{"lines":80,"branches":80}}'
+
