@@ -19,8 +19,8 @@ jobs:
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Lint (Ruff)
-        run: ruff check
+        run: ruff check .
       - name: Format Check (Black)
-        run: black --check
+        run: black --check .
       - name: Run Tests
         run: pytest --cov=. --cov-fail-under=50
