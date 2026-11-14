@@ -24,3 +24,11 @@ jobs:
         run: black --check .
       - name: Run Tests
         run: pytest --cov=. --cov-fail-under=50
+      - name: Run Tests with Coverage
+        run: pytest --cov=. --cov-report=xml --cov-fail-under=50
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: ./coverage.xml
+          fail_ci_if_error: true
