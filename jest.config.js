@@ -1,6 +1,6 @@
 module.exports = {
   testEnvironment: "node",
-  collectCoverageFrom: ["src/**/*.js", "*.js"],
+  collectCoverageFrom: ["math.js", "!eslint.config.js", "!jest.config.js"],
   coverageThreshold: {
     global: {
       branches: 80,
