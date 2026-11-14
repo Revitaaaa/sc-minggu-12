@@ -1,34 +1,33 @@
-name: CI Code Quality
+name: CI Pipeline
 
 on:
   push:
-    branches: [main]
+    branches: [ main ]
   pull_request:
-    branches: [main]
+    branches: [ main ]
 
 jobs:
   quality:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          python-version: '3.11'
-          cache: 'pip'
+          node-version: '20'
+          cache: 'npm'
+
       - name: Install dependencies
-        run: pip install -r requirements.txt
-      - name: Lint (Ruff)
-        run: ruff check .
-      - name: Format Check (Black)
-        run: black --check .
-      - name: Run Tests
-        run: pytest --cov=. --cov-fail-under=50
-      - name: Run Tests with Coverage
-        run: pytest --cov=. --cov-report=xml --cov-fail-under=50
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          file: ./coverage.xml
-          fail_ci_if_error: true
+        uses: actions/setup-node@v4
+        run: npm ci
+
+      - name: Run linter
+        run: npm run lint
+
+      - name: Check formatting
+        run: npm run format:check
+
+      - name: Run tests with coverage
+        run: npm test -- --coverage --ci --coverageThreshold='{"global":{"lines":80,"branches":80}}'
